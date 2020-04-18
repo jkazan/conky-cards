@@ -1,6 +1,6 @@
 conky.config = {
 	background = false,
-	font = 'LubalinGraphECG-Book:size=15',
+	font = 'LubalinGraphECG-Book:size=10',
 --xftfont sans:size=10
 	use_xft = true,
 	xftalpha = 0.9,
@@ -27,7 +27,7 @@ conky.config = {
 	default_shade_color = '#101010',
 	alignment = 'top_left',
 	gap_x = 40,
-	gap_y = 40,
+	gap_y = 180,
 	no_buffers = true,
 	cpu_avg_samples = 1,
 	uppercase = false,
@@ -43,6 +43,7 @@ conky.config = {
 };
 
 conky.text = [[
-${font Monospace:size=50:bold}${time %H}:${time %M}${font}${time %S}
-${font Monospace:size=20:bold}${time %a %d %B %Y}
+${font Monospace:size=14:bold}
+Battery:   ${battery_percent}%
+${exec bash /home/johannek/wetch/conky-cards/test.sh}
 ]];
