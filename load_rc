@@ -15,13 +15,14 @@ conky.config = {
    draw_graph_borders=false,
 
    --  Window Specifications
-   gap_x=40,
-   gap_y=500,
+   gap_x=20,
+   gap_y=300,
 
    alignment="top_left",
+   xinerama_head = 1,
 
-   minimum_height=500,
-   minimum_width=1910,
+   minimum_height=600,
+   minimum_width=250,
 
    own_window=true,
    -- own_window_class="conky",
@@ -46,9 +47,21 @@ conky.config = {
    text_buffer_size=256,
    override_utf8_locale=true,
 
+
+   color1 = '#000000',
+   color2 = '#101010',
 }
 
 ---------------------------------------------------
 ---------------------------------------------------
-conky.text = [[
+conky.text = [[${color1}
+${font Monospace:size=10:bold}top cpu (%) ${color2}${hr 2}${color1}${font Monospace:size=10}
+${top name 1}${goto 160}${top cpu 1}
+${top name 2}${goto 160}${top cpu 2}
+${top name 3}${goto 160}${top cpu 3}
+
+${font Monospace:size=10:bold}top ram (%) ${color2}${hr 2}${color1}${font Monospace:size=10}
+${top_mem name 1}${goto 160}${top mem 1}
+${top_mem name 2}${goto 160}${top mem 2}
+${top_mem name 3}${goto 160}${top mem 3}
 ]]

@@ -19,78 +19,93 @@ function conky_main()
 
    font_n=CAIRO_FONT_WEIGHT_NORMAL
    font_b=CAIRO_FONT_WEIGHT_BOLD
-   R=0.8
-   G=0.8
-   B=1
+   R=0
+   G=0
+   B=0
    badR=0.3
    badG=0
    badB=0
    fs = 20
 
-
-   spotify()
-   draw_cpu()
+   draw_load()
    cairo_destroy(cr)
    cairo_surface_destroy(cs)
    cr=nil
 end
 
+function draw_load()
+   local x=20
 
-function spotify()
-   local x = 0
-   local y = fs
+   local thick = 15
 
-   -- Artist
-   jprint(cr, conky_parse("${exec ~/wetch/spotify-artist.sh}"),
-          x, y, fs, 0.41, 0.64, 0, 1, CAIRO_FONT_WEIGHT_NORMAL)
-
-   -- Title
-   jprint(cr, conky_parse("${exec ~/wetch/spotify-title.sh}"),
-          x, y+fs, fs, 0.41, 0.64, 0, 1, CAIRO_FONT_WEIGHT_NORMAL)
-   -- 0.51, 0.74, 0 spotify rgb
-   -- Artwork
-   -- conky_parse("${exec ~/wetch/spotify-cover.sh}")
-   -- jimage(cr, "/home/johannek/.cache/wetch/current.png", 1, 1, x, y+10+fs, 0.5)
-end
-
-function draw_cpu()
-   local x=0
-   local y=100
-
+   -- cpu
+   local y0=210
+   local y = y0
    local cpu_usage=tonumber(conky_parse("${cpu}"))
    local c=get_colors_gt(cpu_usage, 80)
    local r = 80
-   local thick = 13
 
    circleFill(cr, x+fs*3, y+r-fs/4, r, thick, 0, 240, "100", 100, c[1], c[2], c[3], 0.2)
    circleFill(cr, x+fs*3, y+r-fs/4, r, thick, 0, 240, cpu_usage, 100, c[1], c[2], c[3], 0.5)
    jprint(cr, "cpu", x, y, fs, c[1], c[2], c[3], 1, font_n)
 
-   local start=0
-   local length=210/4 - 3
-   local stop=40
+   local start=40
+   local length=190/4 - 5
+   local stop=30
 
    for i=0, 3, 1 do
       local cpuinner="${cpu cpu" .. i+1 .. "}"
-      circleFill(cr, x+fs*3, y+r-fs/4, r+25, 12,
+      circleFill(cr, x+fs*3, y+r-fs/4, r+23, 10,
                  start+i*length,
                  start+i*length+stop,
                  "100", 100, c[1], c[2], c[3], 0.2)
-      circleFill(cr, x+fs*3, y+r-fs/4, r+25, 12,
+      circleFill(cr, x+fs*3, y+r-fs/4, r+23, 10,
                  start+i*length,
                  start+i*length+stop,
                  cpuinner, 100, c[1], c[2], c[3], 0.5)
 
       local cpuouter="${cpu cpu" .. i+5 .. "}"
-      circleFill(cr, x+fs*3, y+r-fs/4, r+55, 12,
+      circleFill(cr, x+fs*3, y+r-fs/4, r+40, 10,
                  start+i*length,
                  start+i*length+stop,
                  "100", 100, c[1], c[2], c[3], 0.2)
-      circleFill(cr, x+fs*3, y+r-fs/4, r+55, 12,
+      circleFill(cr, x+fs*3, y+r-fs/4, r+40, 10,
                  start+i*length,
                  start+i*length+stop,
                  cpuouter, 100, c[1], c[2], c[3], 0.5)
    end
+
+   -- ram
+   local r = 60
+   local y = y0 + 80 - r
+   local ram_usage=tonumber(conky_parse("${memperc}"))
+   local c=get_colors_gt(ram_usage, 80)
+
+
+   circleFill(cr, x+fs*3, y+r-fs/4, r, thick, 0, 240, "100", 100, c[1], c[2], c[3], 0.2)
+   circleFill(cr, x+fs*3, y+r-fs/4, r, thick, 0, 240, ram_usage, 100, c[1], c[2], c[3], 0.5)
+   jprint(cr, "ram", x, y, fs, c[1], c[2], c[3], 1, font_n)
+
+   -- root
+   local r = 40
+   local y = y0 + 80 - r
+   local root_usage=tonumber(conky_parse("${fs_used_perc}"))
+   local c=get_colors_gt(root_usage, 80)
+
+   circleFill(cr, x+fs*3, y+r-fs/4, r, thick, 0, 240, "100", 100, c[1], c[2], c[3], 0.2)
+   circleFill(cr, x+fs*3, y+r-fs/4, r, thick, 0, 240, root_usage, 100, c[1], c[2], c[3], 0.5)
+   jprint(cr, "root", x-11, y, fs, c[1], c[2], c[3], 1, font_n)
+
+
+   -- swap
+   local r = 20
+   local y = y0 + 80 - r
+   local swap_usage = tonumber(conky_parse("${swapperc}"))
+   local c = get_colors_gt(swap_usage, 80)
+
+   circleFill(cr, x+fs*3, y+r-fs/4, r, thick, 0, 240, "100", 100, c[1], c[2], c[3], 0.2)
+   circleFill(cr, x+fs*3, y+r-fs/4, r, thick, 0, 240, swap_usage, 100, c[1], c[2], c[3], 0.5)
+   jprint(cr, "swap", x-11, y, fs, c[1], c[2], c[3], 1, font_n)
 end
 
 -------------------------------------

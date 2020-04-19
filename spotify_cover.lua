@@ -19,9 +19,9 @@ function conky_main()
 
    font_n=CAIRO_FONT_WEIGHT_NORMAL
    font_b=CAIRO_FONT_WEIGHT_BOLD
-   R=0.8
-   G=0.8
-   B=1
+   R=0
+   G=0
+   B=0
    badR=0.3
    badG=0
    badB=0
@@ -49,7 +49,7 @@ function spotify()
    -- 0.51, 0.74, 0 spotify rgb
    -- Artwork
    conky_parse("${exec ~/wetch/spotify-cover.sh}")
-   jimage(cr, "/home/johannek/.cache/wetch/current.png", 1, 1, x, y+10+fs, 0.5)
+   jimage(cr, "/home/jkazan/.cache/wetch/current.png", 1, 1, x, 50, 0.5)
 end
 
 -------------------------------------

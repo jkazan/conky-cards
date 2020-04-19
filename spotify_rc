@@ -3,6 +3,9 @@ conky.config = {
    lua_draw_hook_post  = 'main',
 
    --  Generic Settings
+   imlib_cache_flush_interval=1,
+   imlib_cache_size=0,
+
    background=true,
    update_interval=1,
    double_buffer=true,
@@ -15,13 +18,14 @@ conky.config = {
    draw_graph_borders=false,
 
    --  Window Specifications
-   gap_x=40,
-   gap_y=1060,
+   gap_x=20,
+   gap_y=720,
 
    alignment="top_left",
+   xinerama_head = 1,
 
-   minimum_height=500,
-   minimum_width=1910,
+   minimum_height=350,
+   minimum_width=300,
 
    own_window=true,
    -- own_window_class="conky",

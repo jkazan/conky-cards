@@ -25,9 +25,13 @@ conky.config = {
 	draw_graph_borders = true,
 	default_color = '#101010',
 	default_shade_color = '#101010',
+
 	alignment = 'top_left',
-	gap_x = 40,
-	gap_y = 180,
+    xinerama_head = 1,
+
+	gap_x = 20,
+	gap_y = 120,
+
 	no_buffers = true,
 	cpu_avg_samples = 1,
 	uppercase = false,
@@ -45,5 +49,5 @@ conky.config = {
 conky.text = [[
 ${font Monospace:size=14:bold}
 Battery:   ${battery_percent}%
-${exec bash /home/johannek/wetch/conky-cards/test.sh}
+${execi 2 bash /home/${USER}/wetch/conky-cards/test.sh}
 ]];
